@@ -8,29 +8,19 @@
 #include <iostream>
 #include <vector>
 #include "Point.h"
+#include "BruteForce.h"
 using namespace std;
-
-//struct coordinate{
-//    bool compareX;
-//    bool compareY;
-//
-//    void setCompareX(bool x) { compareX = x; compareY = false; }
-//    void setCompareY(bool y) { compareX = false; compareY = y; }
-//
-//    bool getCompareX() { return compareX; }
-//    bool getCompareY() { return compareY; }
-//};
 
 
 int compX(const void*, const void*);
 int compY(const void*, const void*);
 
-
-double closestSplit(vector<point>*, int, double);
-double closestUtil(vector<point>*, int);
-void heapify(vector<point>*, int, int);
-void heapSort(vector<point>*, int, bool);
-double closest(vector<point>*, int);
+point* convertVector(vector<point>*);
+double closestSplit(point* pointArray, int, double);
+double closestUtil(point* pointArray, int);
+void heapify(point* pointArray, int, int);
+void heapSort(point* pointArray, int, bool);
+double closest(point* pointArray, int);
 
 void merge(vector<point>, int, int, int, int);
 void mergeSort(vector<point>, int, int, int);

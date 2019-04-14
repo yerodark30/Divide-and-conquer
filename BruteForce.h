@@ -11,6 +11,7 @@ using namespace std;
 
 double bruteForce(vector<point>);
 double pointDistance(point, point);
+double Min(double, double);
 
 
 #endif //DIVDE_AND_CONQUER_BRUTEFORCE_H

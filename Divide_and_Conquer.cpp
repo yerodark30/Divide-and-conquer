@@ -3,14 +3,10 @@
 //
 
 #include "Divide_and_Conquer.h"
-#include "Point.h"
-#include "BruteForce.h"
 #include <iostream>
 #include <vector>
 #include <cmath>
 using namespace std;
-
-bool vector2 = true;
 
 int compX(const void* ptr1, const void* ptr2){
     auto *pointptr1 = (point*)ptr1;
@@ -26,55 +22,58 @@ int compY(const void* ptr1, const void* ptr2){
     return (pointptr1->getY() - pointptr2->getY());
 }
 
-double closestSplit(vector<point>* vectorPtr, int size, double d){
+double closestSplit(point* pointArray, int size, double d){
     double minimum = d;
     bool sortX = false;
 
-    heapSort(vectorPtr, (*vectorPtr).size(), sortX);
+    heapSort(pointArray, size, sortX);
 
-    for(int i = 0; i < size; i++){
-        for(int j = i + 1; j < size && ((*vectorPtr)[j].getY() - (*vectorPtr)[j].getY()) < minimum; ++j){
-            if(pointDistance((*vectorPtr)[i],(*vectorPtr)[j]) < minimum){
-                minimum = pointDistance((*vectorPtr)[i],(*vectorPtr)[j]);
+    for(int i = 0; i < size; ++i){
+        for(int j = i + 1; j < size && (pointArray[j].getY() - pointArray[i].getY()) < minimum; ++j){
+            if(pointDistance(pointArray[i],pointArray[j]) < minimum){
+                minimum = pointDistance(pointArray[i],pointArray[j]);
             }
         }
     }
     return minimum;
 }
 
-double closestUtil(vector<point>* vectorPtr, int size){
+double closestUtil(point* pointArray, int size){
     if(size <= 3){
-        return bruteForce((*vectorPtr));
+        vector<point> pointVector;
+        for(int i = 0; i < size; i++){
+            pointVector.push_back(pointArray[i]);
+        }
+        return bruteForce(pointVector);
     }
 
     int middle = size/2;
-    point midPoint = (*vectorPtr)[middle];
+    point midPoint = pointArray[middle];
+
+    double dl = closestUtil(pointArray, middle);
+    double dr = closestUtil(pointArray + middle, size - middle);
+
+    double d = Min(dl, dr);
 
 
-    double dl = closestUtil(vectorPtr, middle);
-
-
-    double dr = closestUtil(&(*(vectorPtr + middle)), size - middle);
-    double d = min(dl, dr);
-
-    vector<point>* strip = new vector<point>;
     int count = 0;
+    point strip[size];
 
     for(int i = 0; i < size; i++){
-        if(abs((*vectorPtr)[i].getX() - midPoint.getX()) < d){
-            strip->push_back((*vectorPtr)[i]);
+        if(abs(pointArray[i].getX() - midPoint.getX()) < d){
+            strip[count] = pointArray[i];
             count++;
         }
     }
 
-    return min(d, closestSplit((strip), count, d));
+    return Min(d, closestSplit(strip, count, d));
 }
 
-double closest(vector<point>* vectorPtr, int size){
+double closest(point* pointArray, int size){
     bool sortX = true;
-    heapSort(vectorPtr, size, sortX);
+    heapSort(pointArray, size, sortX);
 
-    return closestUtil(vectorPtr, size);
+    return closestUtil(pointArray, size);
 }
 
 
@@ -147,43 +146,48 @@ void mergeSort(vector<point> pointVector, int l, int r, int decide){
     }
 }
 
-void heapify(vector<point>* vectorPtr, int size, int index, bool decide){
+void heapify(point* pointArray, int size, int index, bool decide){
     int maximum = index;
     int left = 2*index + 1;
     int right = 2*index + 2;
 
     if(decide){
-        if(left < size && (*vectorPtr)[left].getX() > (*vectorPtr)[maximum].getX()){
+        if(left < size && pointArray[left].getX() > pointArray[maximum].getX()){
             maximum = left;
         }
-        if(right < size && (*vectorPtr)[right].getX() > (*vectorPtr)[maximum].getX()){
+        if(right < size && pointArray[right].getX() > pointArray[maximum].getX()){
             maximum = right;
         }
     }
     else{
-        if(left < size && (*vectorPtr)[left].getY() > (*vectorPtr)[maximum].getY()){
+        if(left < size && pointArray[left].getY() > pointArray[maximum].getY()){
             maximum = left;
         }
-        if(right < size && (*vectorPtr)[right].getY() > (*vectorPtr)[maximum].getY()){
+        if(right < size && pointArray[right].getY() > pointArray[maximum].getY()){
             maximum = right;
         }
     }
 
 
     if(maximum != index){
-        swap((*vectorPtr)[index], (*vectorPtr)[maximum]);
+        swap(pointArray[index], pointArray[maximum]);
 
-        heapify(vectorPtr, size, maximum, decide);
+        heapify(pointArray, size, maximum, decide);
     }
 }
 
-void heapSort(vector<point>* vectorPtr, int size, bool decide){
+void heapSort(point* pointArray, int size, bool decide){
     for(int i = size/2 - 1; i >=0; i--){
-        heapify(vectorPtr, size, i, decide);
+        heapify(pointArray, size, i, decide);
     }
 
     for(int i = size - 1; i >= 0; i--){
-        swap((*vectorPtr)[0], (*vectorPtr)[i]);
-        heapify(vectorPtr, i, 0, decide);
+        swap(pointArray[0], pointArray[i]);
+        heapify(pointArray, i, 0, decide);
     }
+}
+
+point* convertVector(vector<point>* pointVector){
+    point* pointArrayPtr = &(*pointVector)[0];
+    return pointArrayPtr;
 }
