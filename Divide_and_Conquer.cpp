@@ -69,7 +69,9 @@ double closestUtil(point* pointArray, int size){
     return Min(d, closestSplit(strip, count, d));
 }
 
-double closest(point* pointArray, int size){
+double closest(vector<point>* vectorPtr, int size){
+    point *pointArray;
+    pointArray = convertVector(vectorPtr);
     bool sortX = true;
     heapSort(pointArray, size, sortX);
 

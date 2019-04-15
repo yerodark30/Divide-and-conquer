@@ -20,7 +20,7 @@ double closestSplit(point* pointArray, int, double);
 double closestUtil(point* pointArray, int);
 void heapify(point* pointArray, int, int);
 void heapSort(point* pointArray, int, bool);
-double closest(point* pointArray, int);
+double closest(vector<point>*, int);
 
 void merge(vector<point>, int, int, int, int);
 void mergeSort(vector<point>, int, int, int);
