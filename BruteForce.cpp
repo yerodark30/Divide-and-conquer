@@ -1,13 +1,19 @@
-//
-// Created by Marquise Bell on 4/12/2019.
-//
+/*
+* Author: Marquise Bell, Garret Yero
+* Assignment Title: Closest Pair Brute Force
+* Assignment Description: This program finds the closest pair of points through a
+*                           Brute Force algorithm
+* Due Date: 5/3/2018
+* Date Created: 4/5/2018
+* Date Last Modified: 4/15/2018
+*/
 
 #include "BruteForce.h"
 #include "cfloat"
 #include "cmath"
 using namespace std;
 
-double bruteForce(vector<point> pointVector){
+double bruteForce(vector<pair<int,int>> pointVector){
     if(pointVector.empty()){
 
     }
@@ -26,9 +32,9 @@ double bruteForce(vector<point> pointVector){
     return minimum;
 }
 
-double pointDistance(point p1, point p2){
-    return sqrt( (p1.getX() - p2.getX())*(p1.getX() - p2.getX()) +
-                 (p1.getY() - p2.getY())*(p1.getY() - p2.getY()));
+double pointDistance(pair<int,int> p1, pair<int,int> p2){
+    return sqrt( (p1.first - p2.first)*(p1.first - p2.first) +
+                 (p1.second - p2.second)*(p1.second - p2.second));
 }
 
 double Min(double n1, double n2){

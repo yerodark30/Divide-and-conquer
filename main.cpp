@@ -9,22 +9,23 @@
 using namespace std;
 
 int main() {
-    vector<point> pointVector;
-    vector<point>* vectorPtr = new vector<point>;
+    vector<pair<int,int>> pointVector;
+    //vector<pair<int,int>> pointVector;
+
+    /*** Will be passing a vector pair of ints! ***/
 
     cout << "Points in the vector..." << endl;
-
     srand(time(0));
     for(int i = 0; i < 8; i++){
         point p(rand() % 50 + i, rand() % 50);
-        vectorPtr->push_back(p);
-        (*vectorPtr)[i].display(cout);
+        pointVector.push_back(pair<int,int> (rand() % 50 + i, rand() % 50));
+
+        cout << "(" << pointVector[i].first << "," << pointVector[i].second << ")" << endl;
     }
     cout << endl;
 
-
-    cout << "\nBrute Force: " << bruteForce((*vectorPtr)) << endl;
-    cout << "Divide and Conquer" << closest(vectorPtr, (*vectorPtr).size()) << endl;
+    cout << "\nBrute Force: " << bruteForce(pointVector) << endl;
+    cout << "Divide and Conquer: " << closest(pointVector, pointVector.size()) << endl;
     return 0;
 }
 
