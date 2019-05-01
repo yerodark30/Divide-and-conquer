@@ -5,10 +5,27 @@
 #include "Divide_and_Conquer.h"
 #include "Point.h"
 #include "BruteForce.h"
+#include "SDL_PLotter.h"
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include <cmath>
 using namespace std;
+
+
+
+
+
+// TODO pass in a sdl object and check that the plotting will work
+
+
+// TODO try using a combined merge sort with the heapsort to change runtime to n*log(n) instead of n*log(n)^2
+
+
+
+
+
+
 
 bool vector2 = true;
 
@@ -111,6 +128,10 @@ void merge(vector<point> pointVector, int l, int m, int r, int decide){
             k++;
         }
         // sort by y-coordinate
+        
+        
+        // TODO check to make sure th sorting by y coordinates maintains the integrity of the vector
+        
         else if(decide == 0){
             if(leftPoint[i].getY() <= rightPoint[i].getY()){
                 pointVector.push_back(leftPoint[i]);
@@ -187,3 +208,5 @@ void heapSort(vector<point>* vectorPtr, int size, bool decide){
         heapify(vectorPtr, i, 0, decide);
     }
 }
+
+
